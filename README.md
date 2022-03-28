@@ -1,6 +1,5 @@
-# Guinardia_ViralInfection
+# Guinardia Viral Infection study
 This repository contains all analysis and plotting scripts for the manuscript:
-
 
 *Monitoring viral infections of the abundant marine diatom Guinardia delicatula by automated fluorescence microscopy* 
 
