@@ -36,7 +36,7 @@ ggplot(chl_sph, aes(x=variable, y=value, fill=variable))+
     labs(title = "Chloroplast Sphericity",x = "Time post infection", y = "Sphericity [0;1]")+
     theme_bw()+
     theme(legend.position = "none")+
-    scale_fill_brewer(palette = "Purples", direction=-1)
+    scale_fill_brewer(palette = "RdPu", direction=-1)
 
 ggplot(chl_vol, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.3, width = 0.1)+
@@ -44,7 +44,7 @@ ggplot(chl_vol, aes(x=variable, y=value, fill=variable))+
     labs(title = "Chloroplast Volume",x = "Time post infection", y = "Volume [µm^3]")+
     theme_bw()+
     theme(legend.position = "none")+ ylim(0,1800)+
-    scale_fill_brewer(palette = "Purples", direction=-1)
+    scale_fill_brewer(palette = "RdPu", direction=-1)
 
 ggplot(nuc_vol, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.3, width = 0.1)+
