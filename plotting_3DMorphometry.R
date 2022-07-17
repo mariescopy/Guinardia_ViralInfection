@@ -1,8 +1,9 @@
-
 library(readxl)
 library(ggplot2)
 library(data.table)
 library(RColorBrewer)
+library(cowplot)
+library(gridExtra)
 
 setwd("S:/Quantification//")
 
@@ -23,11 +24,11 @@ chl_vol <- chl_vol[-1,]
 
 # Adding the name of the file as a variable
 chl_sph$file <- "Chloroplast sphericity [0,1]"
-chl_vol$file <- "Chloroplast volume [µm^3]"
-nuc_vol$file <- "Nuclei volume [µm^3]"
+chl_vol$file <- "Chloroplast volume [?m^3]"
+nuc_vol$file <- "Nuclei volume [?m^3]"
 chl_sph_con$file <- "Chloroplast sphericity [0,1]"
-chl_vol_con$file <- "Chloroplast volume [µm^3]"
-nuc_vol_con$file <- "Nuclei volume [µm^3]"
+chl_vol_con$file <- "Chloroplast volume [?m^3]"
+nuc_vol_con$file <- "Nuclei volume [?m^3]"
 
 # Melting the datasets into one column
 chl_sph <- melt(as.data.table(chl_sph))
@@ -44,51 +45,53 @@ nuc_vol_con <- melt(as.data.table(nuc_vol_con))
 
 # PLOTTING
 # infected
-ggplot(chl_sph, aes(x=variable, y=value, fill=variable))+
-    geom_jitter(alpha=0.3, width = 0.1)+
+p_chl_sph_inf<-ggplot(chl_sph, aes(x=variable, y=value, fill=variable))+
+    geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
-    labs(title = "A | Chloroplast Sphericity",x = "Time post infection", y = "Sphericity [0;1]")+
+    labs(title = "Chloroplast Sphericity",x = "", y = "Sphericity [0;1]")+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,0.6)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
-ggplot(chl_vol, aes(x=variable, y=value, fill=variable))+
-    geom_jitter(alpha=0.3, width = 0.1)+
+p_chl_vol_inf<-ggplot(chl_vol, aes(x=variable, y=value, fill=variable))+
+    geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
-    labs(title = "B | Chloroplast Volume",x = "Time post infection", y = "Volume [µm^3]")+
+    labs(title = "Chloroplast Volume",x = "", y = "Volume [ÂµmÂ³]")+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ ylim(0,1800)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
-ggplot(nuc_vol, aes(x=variable, y=value, fill=variable))+
-    geom_jitter(alpha=0.3, width = 0.1)+
+p_nuc_vol_inf<-ggplot(nuc_vol, aes(x=variable, y=value, fill=variable))+
+    geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
-    labs(title = "C | Nucleus Volume",x = "Time post infection", y = "Volume [µm^3]")+
+    labs(title = "Nucleus Volume",x = "", y = "Volume [ÂµmÂ³]")+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,170)+
     scale_fill_brewer(palette = "Blues", direction=-1)
 
 # control
-ggplot(chl_sph_con, aes(x=variable, y=value, fill=variable))+
-    geom_jitter(alpha=0.3, width = 0.1)+
+p_chl_sph_con<-ggplot(chl_sph_con, aes(x=variable, y=value, fill=variable))+
+    geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
-    labs(title = "A | Chloroplast Sphericity",x = "Time post infection", y = "Sphericity [0;1]")+
+    labs(x = "Time post infection", y = "Sphericity [0;1]")+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,0.6)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
-ggplot(chl_vol_con, aes(x=variable, y=value, fill=variable))+
-    geom_jitter(alpha=0.3, width = 0.1)+
+p_chl_vol_con<-ggplot(chl_vol_con, aes(x=variable, y=value, fill=variable))+
+    geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
-    labs(title = "B | Chloroplast Volume",x = "Time post infection", y = "Volume [µm^3]")+
+    labs(x = "Time post infection", y = "Volume [ÂµmÂ³]")+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ ylim(0,1800)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
-ggplot(nuc_vol_con, aes(x=variable, y=value, fill=variable))+
-    geom_jitter(alpha=0.3, width = 0.1)+
+p_nuc_vol_con<-ggplot(nuc_vol_con, aes(x=variable, y=value, fill=variable))+
+    geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
-    labs(title = "C | Nucleus Volume",x = "Time post infection", y = "Volume [µm^3]")+
+    labs(x = "Time post infection", y = "Volume [ÂµmÂ³]")+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,170)+
     scale_fill_brewer(palette = "Blues", direction=-1)
+
+grid.arrange(p_chl_sph_inf,p_chl_vol_inf,p_nuc_vol_inf, p_chl_sph_con,p_chl_vol_con,p_nuc_vol_con, nrow = 2)

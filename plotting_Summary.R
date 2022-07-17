@@ -1,4 +1,3 @@
-
 library(readxl)
 library(ggplot2)
 library(data.table)
@@ -15,27 +14,28 @@ names(guinardia_data)
 #head(data)
 
 # Plotting
-p1a_abundances  <- ggplot(guinardia_data, aes(x=hours)) + 
+p1a_abundances  <-  ggplot(guinardia_data, aes(x=hours)) + 
     geom_line(aes(y = abun_inf), size=1) + 
     geom_line(aes(y = abun_con), size=1,linetype="dashed") +
     theme_bw() + theme(plot.title = element_text(face="bold"))+
-    labs(title = "A | Cell abundances",y = "Cells per mL",x="")
+    labs(title = "A  Cell abundances",y = "Cells per mL",x="")
 
 p1_viral_titer <- ggplot(guinardia_data, aes(hours, Viral_titer)) + 
     geom_point(color = "springgreen3", size=3, alpha=0.3)+
     geom_line(color = "springgreen3", size=1) + theme_bw() +
     theme(plot.title = element_text(face="bold"))+
-    labs(title = "B | Extracellular infectious viruses",x="", y = "Viral titer [1/mL]")
+    labs(title = "C  Extracellular infectious viruses",x="", y = "Viral titer [1/mL]")
 
 p2_FvFm <- ggplot(guinardia_data, aes(x=hours)) + 
     geom_line(aes(y = Fv_Fm_inf), color="magenta3",size=1) + 
     geom_line(aes(y = Fv_Fm_con), color="magenta3",size=1,linetype="dashed") +
+    geom_hline(yintercept=0.6,color="grey25",size=0.3)+
     theme_bw() + theme(plot.title = element_text(face="bold"))+
-    labs(title = "C | Photosynthetic effciency",y = "Fv/Fm",x="Time post infection (hours)")
+    labs(title = "B  Photosynthetic effciency",y = "Fv/Fm",x="Time post infection (hours)")
 
 # Merging plots
 grid.newpage()
-grid.draw(rbind(ggplotGrob(p1a_abundances), ggplotGrob(p1_viral_titer), ggplotGrob(p2_FvFm), size = "last"))
+grid.draw(rbind(ggplotGrob(p1a_abundances), ggplotGrob(p2_FvFm), ggplotGrob(p1_viral_titer),size = "last"))
 
 
 inf_data <- melt(as.data.table(guinardia_data), id.vars=c("time", "hours"))
