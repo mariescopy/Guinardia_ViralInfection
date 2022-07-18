@@ -5,7 +5,7 @@ library(RColorBrewer)
 library(cowplot)
 library(gridExtra)
 
-setwd("S:/Quantification//")
+stwd("S:/Quantification//")
 
 # Opening the data
 # infected samples
@@ -38,11 +38,38 @@ chl_sph_con <- melt(as.data.table(chl_sph_con))
 chl_vol_con <- melt(as.data.table(chl_vol_con))
 nuc_vol_con <- melt(as.data.table(nuc_vol_con))
 
-# Merging all files
-#data <- rbind(chl_sph, chl_vol, nuc_vol)
-#head(data)
+########################################################
+# BIOSTATISTICS
+chl_sph_tidy <- read_excel("3D_Morphometry_noNA.xlsx", sheet="Chl_Sphericity_tidy")
+chl_vol_tidy <- read_excel("3D_Morphometry_noNA.xlsx", sheet="Chl_Volume_tidy")
+nuc_vol_tidy <- read_excel("3D_Morphometry_noNA.xlsx", sheet="Nuc_Volume_tidy")
+
+#pairwise tests for each time point
+timpoints<-list("t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7")
+
+for (t in timpoints)
+{ 
+  print(t)
+  chl_sph_tidy_sub<-subset(chl_sph_tidy, Time==t)
+  #pairwise t-tests
+  print(t.test(Chl_Sphericity ~ Culture, data = chl_sph_tidy_sub))
+  #fit to linear model
+  print(summary(lm(Chl_Sphericity ~ Culture, data = chl_sph_tidy_sub)))
+}
+
+for (t in timpoints)
+{ 
+  print(t)
+  chl_vol_tidy_sub<-subset(chl_vol_tidy, Time==t)
+  #pairwise t-tests
+  print(t.test(Chl_Volume ~ Culture, data = chl_vol_tidy_sub))
+  #fit to linear model
+  #print(summary(lm(Chl_Volume ~ Culture, data = chl_vol_tidy_sub)))
+}
 
 
+
+########################################################
 # PLOTTING
 # infected
 p_chl_sph_inf<-ggplot(chl_sph, aes(x=variable, y=value, fill=variable))+
@@ -68,6 +95,7 @@ p_nuc_vol_inf<-ggplot(nuc_vol, aes(x=variable, y=value, fill=variable))+
     theme_bw()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,170)+
     scale_fill_brewer(palette = "Blues", direction=-1)
+
 
 # control
 p_chl_sph_con<-ggplot(chl_sph_con, aes(x=variable, y=value, fill=variable))+

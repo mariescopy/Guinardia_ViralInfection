@@ -82,7 +82,7 @@ p3a_biovolume <- ggplot(biovolume_data) +
   geom_point() +
   geom_line(aes(linetype=Culture),size=1)+
   geom_ribbon(aes(ymin=VolumeMedian-VolumeStdDev,ymax=VolumeMedian+VolumeStdDev),linetype=0,alpha=0.15)+ 
-  labs(title = "Measured Cell Biovolumes",x = "",y="Volume\n[µm³]\n")+
+  labs(title = "Measured Cell Biovolumes",x = "",y="Volume\n[ÂµmÂ³]\n")+
   scale_x_continuous(breaks=c(seq(0,92,10)))+
   scale_colour_manual(values=c("gray50","red2"))+
   scale_fill_manual(values=c("gray50","red2"))+
@@ -107,7 +107,7 @@ p3b_chlmedian <- ggplot(biovolume_data) +
   geom_point() +
   geom_line(aes(linetype=Culture),size=1)+
   geom_ribbon(aes(ymax=ChloroplastsMedian+ChloroplastStDv,ymin=ChloroplastsMedian-ChloroplastStDv),linetype=0,alpha=0.15)+
-  labs(title = "Chloroplast size",x = "",y="Volume\n[µm³]\n")+
+  labs(title = "Chloroplast size",x = "",y="Volume\n[ÂµmÂ³]\n")+
   scale_x_continuous(breaks=c(seq(0,92,10)))+
   scale_colour_manual(values=c("gray50","purple4"))+
   scale_fill_manual(values=c("gray50","purple4"))+
@@ -119,7 +119,7 @@ p3c_nucmedian <- ggplot(biovolume_data) +
   geom_point() +
   geom_line(aes(linetype=Culture),size=1)+
   geom_ribbon(aes(ymax=NucleiMedian+NucleiStDev,ymin=NucleiMedian-NucleiStDev),linetype=0,alpha=0.15) + 
-  labs(title = "Nuclei size",x = "",y="Volume\n[µm³]\n")+
+  labs(title = "Nuclei size",x = "",y="Volume\n[ÂµmÂ³]\n")+
   scale_x_continuous(breaks=c(seq(0,92,10)))+
   scale_colour_manual(values=c("gray50","blue2"))+
   scale_fill_manual(values=c("gray50","blue2"))+
@@ -140,4 +140,9 @@ grid.newpage()
 grid.draw(rbind(ggplotGrob(p3a_biovolume), ggplotGrob(p3a_biomassmedian),
                 ggplotGrob(p3c_nucmedian),
                 ggplotGrob(p3b_chlmedian), ggplotGrob(p3d_chlpercent), 
+                size = "last"))
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(p3a_biovolume), ggplotGrob(p3a_biomassmedian),
+                ggplotGrob(p3d_chlpercent), 
                 size = "last"))
