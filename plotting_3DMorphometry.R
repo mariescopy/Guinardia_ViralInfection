@@ -67,16 +67,27 @@ for (t in timpoints)
   #print(summary(lm(Chl_Volume ~ Culture, data = chl_vol_tidy_sub)))
 }
 
+for (t in timpoints)
+{ 
+  print(t)
+  nuc_vol_tidy_sub<-subset(nuc_vol_tidy, Time==t)
+  #pairwise t-tests
+  print(t.test(Nuc_Volume ~ Culture, data = nuc_vol_tidy_sub))
+  #fit to linear model
+  #print(summary(lm(Nuc_Volume ~ Culture, data = nuc_vol_tidy_sub)))
+}
 
 
 ########################################################
 # PLOTTING
+# Figure 4: Morphological changes
 # infected
 p_chl_sph_inf<-ggplot(chl_sph, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
     labs(title = "Chloroplast Sphericity",x = "", y = "Sphericity [0;1]")+
-    theme_bw()+
+    #theme_bw()+
+    theme_minimal()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,0.6)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
@@ -84,7 +95,8 @@ p_chl_vol_inf<-ggplot(chl_vol, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
     labs(title = "Chloroplast Volume",x = "", y = "Volume [µm³]")+
-    theme_bw()+
+    #theme_bw()+
+    theme_minimal()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ ylim(0,1800)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
@@ -92,7 +104,8 @@ p_nuc_vol_inf<-ggplot(nuc_vol, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
     labs(title = "Nucleus Volume",x = "", y = "Volume [µm³]")+
-    theme_bw()+
+     #theme_bw()+
+    theme_minimal()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,170)+
     scale_fill_brewer(palette = "Blues", direction=-1)
 
@@ -102,7 +115,8 @@ p_chl_sph_con<-ggplot(chl_sph_con, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
     labs(x = "Time post infection", y = "Sphericity [0;1]")+
-    theme_bw()+
+    #theme_bw()+
+    theme_minimal()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,0.6)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
@@ -110,7 +124,8 @@ p_chl_vol_con<-ggplot(chl_vol_con, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
     labs(x = "Time post infection", y = "Volume [µm³]")+
-    theme_bw()+
+    #theme_bw()+
+    theme_minimal()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ ylim(0,1800)+
     scale_fill_brewer(palette = "RdPu", direction=-1)
 
@@ -118,7 +133,8 @@ p_nuc_vol_con<-ggplot(nuc_vol_con, aes(x=variable, y=value, fill=variable))+
     geom_jitter(alpha=0.2, width = 0.1)+
     geom_boxplot(alpha=0.7, outlier.shape = NA)+
     labs(x = "Time post infection", y = "Volume [µm³]")+
-    theme_bw()+
+    #theme_bw()+
+    theme_minimal()+
     theme(legend.position = "none", plot.title = element_text(face="bold"))+ylim(0,170)+
     scale_fill_brewer(palette = "Blues", direction=-1)
 
