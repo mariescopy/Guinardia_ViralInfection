@@ -1,7 +1,9 @@
 # Guinardia Viral Infection study
 This repository contains all analysis and plotting scripts for the manuscript:  
+
 *Viral infection impacts the 3D subcellular structure of the abundant marine diatom Guinardia delicatula* by  
 **Marie Walde, Cyprien Camplong, Colomban de Vargas, Anne-Claire Baudoux, Nathalie Simon**
+
 https://doi.org/10.1101/2022.09.06.505714 
 
 ## Physiological Measurements & Counts
